@@ -99,6 +99,7 @@ class LineChartScreen extends React.Component {
               enabled: true,
               markerColor: processColor('white'),
               textColor: processColor('black'),
+              markerVerticalOffset: 10,
             }}
             xAxis={{
               enabled: true,
@@ -120,14 +121,6 @@ class LineChartScreen extends React.Component {
               right: {
                 enabled: false,
 
-              },
-            }}
-            visibleRange={{
-              y: {
-               left: {
-                 min: 0,
-                 max: 120,
-               },
               },
             }}
             autoScaleMinMaxEnabled={true}

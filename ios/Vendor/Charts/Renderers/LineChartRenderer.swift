@@ -603,6 +603,7 @@ open class LineChartRenderer: LineRadarRenderer
     
     fileprivate func drawCircles(context: CGContext)
     {
+        // MARKER - HERE WE'LL NEED TO DETECT IF ACTIVE CIRCLE AND RENDER IT DIFFERENTLY
         guard
             let dataProvider = dataProvider,
             let lineData = dataProvider.lineData,

@@ -51,22 +51,28 @@ class LineChartScreen extends React.Component {
               dataSets: [{
                 values: [
                   {
-                    y: 65, x: 0, marker: '65 kg',
+                    x: new Date('2018-01-01').getTime() / 1000,
+                    y: 65, marker: '65 kg',
                   },
                   {
-                    y: 77, x: 1, marker: '77 kg',
+                    x: new Date('2018-02-01').getTime() / 1000,
+                    y: 77, marker: '77 kg',
                   },
                   {
-                    y: 76, x: 2, marker: '76 kg',
+                    x: new Date('2018-03-01').getTime() / 1000,
+                    y: 76, marker: '76 kg',
                   },
                   {
-                    y: 74, x: 3, marker: '74 kg',
+                    x: new Date('2018-04-01').getTime() / 1000,
+                    y: 74, marker: '74 kg',
                   },
                   {
-                    y: 76, x: 4, marker: '76 kg',
+                    x: new Date('2018-05-01').getTime() / 1000,
+                    y: 76, marker: '76 kg',
                   },
                   {
-                    y: 65, x: 5, marker: 'Today: 65 kg',
+                    x: new Date('2018-06-01').getTime() / 1000,
+                    y: 65, marker: 'Today: 65 kg',
                   }],
                 label: 'Company X',
 
@@ -99,10 +105,10 @@ class LineChartScreen extends React.Component {
               enabled: true,
               markerColor: processColor('white'),
               textColor: processColor('black'),
+              markerVerticalOffset: 10,
             }}
             xAxis={{
               enabled: true,
-              granularity: 1,
               drawLabels: true,
               position: 'BOTTOM',
               drawAxisLine: true,
@@ -111,7 +117,8 @@ class LineChartScreen extends React.Component {
               fontWeight:"bold",
               textSize: 12,
               textColor: processColor('gray'),
-              valueFormatter: ['M', 'T', 'W', 'T', 'F', 'S'],
+              valueFormatter: 'date',
+              valueFormatterPattern: 'MMMM',
             }}
             yAxis={{
               left: {
@@ -120,14 +127,6 @@ class LineChartScreen extends React.Component {
               right: {
                 enabled: false,
 
-              },
-            }}
-            visibleRange={{
-              y: {
-               left: {
-                 min: 0,
-                 max: 120,
-               },
               },
             }}
             autoScaleMinMaxEnabled={true}

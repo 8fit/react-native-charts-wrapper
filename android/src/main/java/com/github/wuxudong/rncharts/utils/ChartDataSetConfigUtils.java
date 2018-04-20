@@ -60,7 +60,11 @@ public class ChartDataSetConfigUtils {
                 dataSet.setValueFormatter(new PercentFormatter());
             } else if ("date".equals(valueFormatter)) {
                 String valueFormatterPattern = config.getString("valueFormatterPattern");
-                dataSet.setValueFormatter(new DateFormatter(valueFormatterPattern));
+                String valueFormatterLocale = "";
+                if (config.hasKey("valueFormatterLocale")) {
+                    valueFormatterLocale = config.getString("valueFormatterLocale");
+                }
+                dataSet.setValueFormatter(new DateFormatter(valueFormatterPattern, valueFormatterLocale));
             } else {
                 dataSet.setValueFormatter(new CustomFormatter(valueFormatter));
             }

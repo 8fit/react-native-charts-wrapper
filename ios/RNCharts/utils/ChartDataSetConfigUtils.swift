@@ -50,7 +50,8 @@ class ChartDataSetConfigUtils: NSObject {
                 dataSet.valueFormatter = DefaultValueFormatter(formatter: percentFormatter);
             } else if "date" == valueFormatter.stringValue {
                 let valueFormatterPattern = config["valueFormatterPattern"].stringValue;
-                dataSet.valueFormatter = ChartDateFormatter(pattern: valueFormatterPattern);
+                let valueFormatterLocale = config["valueFormatterLocale"].stringValue;
+                dataSet.valueFormatter = ChartDateFormatter(pattern: valueFormatterPattern, valueFormatterLocale: valueFormatterLocale);
             } else {
                 let customFormatter = NumberFormatter()
                 customFormatter.positiveFormat = valueFormatter.stringValue

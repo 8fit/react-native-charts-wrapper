@@ -1,5 +1,7 @@
 package com.github.wuxudong.rncharts.charts;
 
+import android.animation.ObjectAnimator;
+import android.animation.StateListAnimator;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -253,8 +255,12 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
             chart.setMarker(null);
             return;
         }
-
+        float verticalOffset = 0;
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "markerVerticalOffset")) {
+            verticalOffset = (float) propMap.getDouble("markerVerticalOffset");
+        }
         RNRectangleMarkerView marker = new RNRectangleMarkerView(chart.getContext());
+        marker.setVerticalOffset(verticalOffset);
         marker.setChartView(chart);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
@@ -440,7 +446,11 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
                 axis.setValueFormatter(new PercentFormatter());
             } else if ("date".equals(valueFormatter)) {
                 String valueFormatterPattern = propMap.getString("valueFormatterPattern");
-                axis.setValueFormatter(new DateFormatter(valueFormatterPattern));
+                String valueFormatterLocale = "";
+                if (propMap.hasKey("valueFormatterLocale")) {
+                    valueFormatterLocale = propMap.getString("valueFormatterLocale");
+                }
+                axis.setValueFormatter(new DateFormatter(valueFormatterPattern, valueFormatterLocale));
             } else {
                 axis.setValueFormatter(new CustomFormatter(valueFormatter));
             }

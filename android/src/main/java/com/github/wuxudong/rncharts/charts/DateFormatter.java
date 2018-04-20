@@ -39,7 +39,7 @@ public class DateFormatter implements IAxisValueFormatter, IValueFormatter {
         return format((long) value);
     }
 
-    private String format(long millis) {
-        return mFormat.format(new Date(millis));
+    private String format(long seconds) {
+        return mFormat.format(new Date(seconds * 1000));
     }
 }

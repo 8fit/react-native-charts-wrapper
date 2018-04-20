@@ -51,28 +51,28 @@ class LineChartScreen extends React.Component {
               dataSets: [{
                 values: [
                   {
-                    x: new Date('2018-01-01').getTime(),
-                    y: 65, x: 0, marker: '65 kg',
+                    x: new Date('2018-01-01').getTime() / 1000,
+                    y: 65, marker: '65 kg',
                   },
                   {
-                    x: new Date('2018-02-01').getTime(),
-                    y: 77, x: 1, marker: '77 kg',
+                    x: new Date('2018-02-01').getTime() / 1000,
+                    y: 77, marker: '77 kg',
                   },
                   {
-                    x: new Date('2018-03-01').getTime(),
-                    y: 76, x: 2, marker: '76 kg',
+                    x: new Date('2018-03-01').getTime() / 1000,
+                    y: 76, marker: '76 kg',
                   },
                   {
-                    x: new Date('2018-04-01').getTime(),
-                    y: 74, x: 3, marker: '74 kg',
+                    x: new Date('2018-04-01').getTime() / 1000,
+                    y: 74, marker: '74 kg',
                   },
                   {
-                    x: new Date('2018-05-01').getTime(),
-                    y: 76, x: 4, marker: '76 kg',
+                    x: new Date('2018-05-01').getTime() / 1000,
+                    y: 76, marker: '76 kg',
                   },
                   {
-                    x: new Date('2018-06-01').getTime(),
-                    y: 65, x: 5, marker: 'Today: 65 kg',
+                    x: new Date('2018-06-01').getTime() / 1000,
+                    y: 65, marker: 'Today: 65 kg',
                   }],
                 label: 'Company X',
 
@@ -109,7 +109,6 @@ class LineChartScreen extends React.Component {
             }}
             xAxis={{
               enabled: true,
-              granularity: 1,
               drawLabels: true,
               position: 'BOTTOM',
               drawAxisLine: true,
@@ -120,7 +119,6 @@ class LineChartScreen extends React.Component {
               textColor: processColor('gray'),
               valueFormatter: 'date',
               valueFormatterPattern: 'MMMM',
-              valueFormatterLocale: 'fr',
             }}
             yAxis={{
               left: {

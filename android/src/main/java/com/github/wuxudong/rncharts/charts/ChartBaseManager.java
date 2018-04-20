@@ -255,8 +255,12 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
             chart.setMarker(null);
             return;
         }
-
+        float verticalOffset = 0;
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "markerVerticalOffset")) {
+            verticalOffset = (float) propMap.getDouble("markerVerticalOffset");
+        }
         RNRectangleMarkerView marker = new RNRectangleMarkerView(chart.getContext());
+        marker.setVerticalOffset(verticalOffset);
         marker.setChartView(chart);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&

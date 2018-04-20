@@ -32,6 +32,8 @@ public class RNRectangleMarkerView extends MarkerView {
 
     private int digits = 0;
 
+    private float mVerticalOffset = 0;
+
     public RNRectangleMarkerView(Context context) {
         super(context, R.layout.rectangle_marker);
 
@@ -40,6 +42,10 @@ public class RNRectangleMarkerView extends MarkerView {
 
     public void setDigits(int digits) {
         this.digits = digits;
+    }
+
+    public void setVerticalOffset(float mVerticalOffset) {
+        this.mVerticalOffset = mVerticalOffset;
     }
 
     @Override
@@ -92,8 +98,9 @@ public class RNRectangleMarkerView extends MarkerView {
 
         MPPointF offset2 = new MPPointF();
 
+
         offset2.x = offset.x;
-        offset2.y = offset.y;
+        offset2.y = offset.y - mVerticalOffset;
 
         Chart chart = getChartView();
 
@@ -103,7 +110,7 @@ public class RNRectangleMarkerView extends MarkerView {
             offset2.x = 0;
 
             if (posY + offset2.y < 0) {
-                offset2.y = 0;
+                offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTopLeft);
             } else {
                 tvContent.setBackground(backgroundLeft);
@@ -113,14 +120,14 @@ public class RNRectangleMarkerView extends MarkerView {
             offset2.x = -width;
 
             if (posY + offset2.y < 0) {
-                offset2.y = 0;
+                offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTopRight);
             } else {
                 tvContent.setBackground(backgroundRight);
             }
         } else {
             if (posY + offset2.y < 0) {
-                offset2.y = 0;
+                offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTop);
             } else {
                 tvContent.setBackground(background);

@@ -396,7 +396,8 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
                 axis.valueFormatter = DefaultAxisValueFormatter(formatter: percentFormatter);
             } else if "date" == valueFormatter.stringValue {
               let valueFormatterPattern = config["valueFormatterPattern"].stringValue;
-              axis.valueFormatter = ChartDateFormatter(pattern: valueFormatterPattern);
+              let valueFormatterLocale = config["valueFormatterLocale"].stringValue;
+                axis.valueFormatter = ChartDateFormatter(pattern: valueFormatterPattern, valueFormatterLocale: valueFormatterLocale);
             } else {
               let customFormatter = NumberFormatter()
               customFormatter.positiveFormat = valueFormatter.stringValue

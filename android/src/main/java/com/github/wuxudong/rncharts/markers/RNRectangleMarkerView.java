@@ -72,6 +72,10 @@ public class RNRectangleMarkerView extends MarkerView {
             tvContent.setText(text);
             tvContent.setVisibility(VISIBLE);
         }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            tvContent.setClipToOutline(true);
+            tvContent.setElevation(8);
+        }
 
         super.refreshContent(e, highlight);
     }

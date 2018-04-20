@@ -17,8 +17,12 @@ open class ChartDateFormatter: NSObject, IValueFormatter, IAxisValueFormatter {
     
   }
   
-  public init(pattern: String?) {
-    self.dateFormatter.dateFormat = pattern;
+    public init(pattern: String?, valueFormatterLocale: String?) {
+        self.dateFormatter.dateFormat = pattern;
+        if (valueFormatterLocale != nil && !valueFormatterLocale!.isEmpty) {
+            self.dateFormatter.locale = Locale.init(identifier: valueFormatterLocale!);
+        }
+        
   }
   
   open func stringForValue(_ value: Double, axis: AxisBase?) -> String {

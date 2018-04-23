@@ -19,6 +19,7 @@ import CoreGraphics
 open class BalloonMarker: MarkerView {
     open var color: UIColor?
     open var markerVerticalOffset: CGFloat?
+    open var markerBorderRadius: CGFloat?
     open var arrowSize = CGSize(width: 15, height: 11)
     open var font: UIFont?
     open var textColor: UIColor?
@@ -35,12 +36,13 @@ open class BalloonMarker: MarkerView {
     fileprivate var _drawAttributes = [NSAttributedStringKey: Any]()
 
 
-    public init(color: UIColor, font: UIFont, textColor: UIColor, markerVerticalOffset: CGFloat) {
+    public init(color: UIColor, font: UIFont, textColor: UIColor, markerVerticalOffset: CGFloat, markerBorderRadius: CGFloat) {
         super.init(frame: CGRect.zero);
         self.color = color
         self.font = font
         self.textColor = textColor
         self.markerVerticalOffset = markerVerticalOffset
+        self.markerBorderRadius = markerBorderRadius
 
         _paragraphStyle = NSParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle
         _paragraphStyle?.alignment = .center
@@ -58,6 +60,7 @@ open class BalloonMarker: MarkerView {
         let width = _size.width
 
         let markerVerticalOffset = self.markerVerticalOffset ?? 0;
+        let markerBorderRadius = self.markerBorderRadius ?? 0;
 
         var rect = CGRect(origin: point, size: _size)
 
@@ -66,13 +69,13 @@ open class BalloonMarker: MarkerView {
             rect.origin.y += markerVerticalOffset
 
             if point.x - _size.width / 2.0 < 0 {
-                drawTopLeftRect(context: context, rect: rect)
+                drawTopLeftRect(context: context, rect: rect, radius: markerBorderRadius)
             } else if (chart != nil && point.x + width - _size.width / 2.0 > (chart?.bounds.width)!) {
                 rect.origin.x -= _size.width
-                drawTopRightRect(context: context, rect: rect)
+                drawTopRightRect(context: context, rect: rect, radius: markerBorderRadius)
             } else {
                 rect.origin.x -= _size.width / 2.0
-                drawTopCenterRect(context: context, rect: rect)
+                drawTopCenterRect(context: context, rect: rect, radius: markerBorderRadius)
             }
 
             rect.origin.y += self.topInsets.top
@@ -83,13 +86,13 @@ open class BalloonMarker: MarkerView {
             rect.origin.y -= _size.height
 
             if point.x - _size.width / 2.0 < 0 {
-                drawLeftRect(context: context, rect: rect)
+                drawLeftRect(context: context, rect: rect, radius: markerBorderRadius)
             } else if (chart != nil && point.x + width - _size.width / 2.0 > (chart?.bounds.width)!) {
                 rect.origin.x -= _size.width
-                drawRightRect(context: context, rect: rect)
+                drawRightRect(context: context, rect: rect, radius: markerBorderRadius)
             } else {
                 rect.origin.x -= _size.width / 2.0
-                drawCenterRect(context: context, rect: rect)
+                drawCenterRect(context: context, rect: rect, radius: markerBorderRadius)
             }
 
             rect.origin.y += self.insets.top
@@ -99,104 +102,155 @@ open class BalloonMarker: MarkerView {
         return rect
     }
 
-    func drawCenterRect(context: CGContext, rect: CGRect) {
+    func drawCenterRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
 
-        // A                   B
-        //  +-----------------+
-        //  |                 |
-        //  |                 |
-        //  |     F    D      |
-        //  +-----+    +------+
-        // G       \  /        C
-        //          \/
-        //           E
+        let xO = rect.origin.x
+        let yO = rect.origin.y
 
-        let A = CGPoint(x: rect.origin.x, y: rect.origin.y)
-        let B = CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y)
-        let C = CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height - arrowSize.height)
-        let D = CGPoint(x: rect.origin.x + (rect.size.width + arrowSize.width) / 2.0, y: rect.origin.y + rect.size.height - arrowSize.height)
-        let E = CGPoint(x: rect.origin.x + rect.size.width / 2.0, y: rect.origin.y + rect.size.height)
-        let F = CGPoint(x: rect.origin.x + (rect.size.width - arrowSize.width) / 2.0, y: rect.origin.y + rect.size.height - arrowSize.height)
-        let G = CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height - arrowSize.height)
         context.setFillColor((color?.cgColor)!)
         context.beginPath()
-        context.move(to: A)
-        context.addLine(to: B)
-        // context.addArc(tangent1End: B, tangent2End:  CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + 2), radius:4)
-        context.addLine(to: C)
-        context.addLine(to: D)
-        context.addLine(to: E)
-        context.addLine(to: F)
-        context.addLine(to: G)
-        context.addLine(to: A)
+        context.move(to: CGPoint(x: xO + radius, y: yO))
+        context.addLine(to: CGPoint(x: xO + width - radius, y: yO))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO), tangent2End:  CGPoint(x: xO + width, y: yO + radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height - radius))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO + height), tangent2End:  CGPoint(x: xO + width - radius, y: yO + height), radius: radius)
+        context.addLine(to: CGPoint(x: xO + (width + arrowWidth) / 2.0, y: yO + height))
+        context.addLine(to: CGPoint(x: xO + width / 2.0, y: yO + height + arrowHeight))
+        context.addLine(to: CGPoint(x: xO + (width - arrowWidth) / 2.0, y: yO + height))
+        context.addLine(to: CGPoint(x: xO + radius, y: yO + height))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO + height), tangent2End:  CGPoint(x: xO, y: yO + height - radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO, y: yO + radius))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO), tangent2End:  CGPoint(x: xO + radius, y: yO), radius: radius)
         context.fillPath()
 
     }
 
-    func drawLeftRect(context: CGContext, rect: CGRect) {
+    func drawLeftRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
+
+        let xO = rect.origin.x
+        let yO = rect.origin.y
+
         context.setFillColor((color?.cgColor)!)
         context.beginPath()
-        context.move(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height - arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + arrowSize.width / 2.0, y: rect.origin.y + rect.size.height - arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
+        context.move(to: CGPoint(x: xO + radius, y: yO))
+        context.addLine(to: CGPoint(x: xO + width - radius, y: yO))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO), tangent2End:  CGPoint(x: xO + width, y: yO + radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height - radius))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO + height), tangent2End:  CGPoint(x: xO + width - radius, y: yO + height), radius: radius)
+        context.addLine(to: CGPoint(x: xO + arrowSize.width / 2.0, y: yO + height))
+        context.addLine(to: CGPoint(x: xO, y: yO + height + arrowHeight))
+        context.addLine(to: CGPoint(x: xO, y: yO + radius))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO), tangent2End:  CGPoint(x: xO + radius, y: yO), radius: radius)
         context.fillPath()
 
     }
 
-    func drawRightRect(context: CGContext, rect: CGRect) {
+    func drawRightRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
+
+        let xO = rect.origin.x
+        let yO = rect.origin.y
+
         context.setFillColor((color?.cgColor)!)
         context.beginPath()
-        context.move(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x  + rect.size.width - arrowSize.width / 2.0, y: rect.origin.y + rect.size.height - arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height - arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
+        context.move(to: CGPoint(x: xO + radius, y: yO))
+        context.addLine(to: CGPoint(x: xO + width - radius, y: yO))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO), tangent2End:  CGPoint(x: xO + width, y: yO + radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height + arrowHeight))
+        context.addLine(to: CGPoint(x: xO  + width - arrowSize.width / 2.0, y: yO + height))
+        context.addLine(to: CGPoint(x: xO + (width - arrowWidth) / 2.0, y: yO + height))
+        context.addLine(to: CGPoint(x: xO + radius, y: yO + height))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO + height), tangent2End:  CGPoint(x: xO, y: yO + height - radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO, y: yO + radius))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO), tangent2End:  CGPoint(x: xO + radius, y: yO), radius: radius)
+        context.fillPath()
+    }
+
+    func drawTopCenterRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
+
+        let xO = rect.origin.x
+        let yO = rect.origin.y + arrowHeight
+
+
+        context.setFillColor((color?.cgColor)!)
+        context.beginPath()
+        context.move(to: CGPoint(x: xO + radius, y: yO))
+        context.addLine(to: CGPoint(x: xO + (width - arrowSize.width) / 2.0, y: yO))
+        context.addLine(to: CGPoint(x: xO + width / 2.0, y: yO - arrowHeight))
+        context.addLine(to: CGPoint(x: xO + (width + arrowSize.width) / 2.0, y: yO))
+
+        context.addLine(to: CGPoint(x: xO + width - radius, y: yO))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO), tangent2End:  CGPoint(x: xO + width, y: yO + radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height - radius))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO + height), tangent2End:  CGPoint(x: xO + width - radius, y: yO + height), radius: radius)
+        context.addLine(to: CGPoint(x: xO + radius, y: yO + height))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO + height), tangent2End:  CGPoint(x: xO, y: yO + height - radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO, y: yO + radius))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO), tangent2End:  CGPoint(x: xO + radius, y: yO), radius: radius)
         context.fillPath()
 
     }
 
-    func drawTopCenterRect(context: CGContext, rect: CGRect) {
+    func drawTopLeftRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
+
+        let xO = rect.origin.x
+        let yO = rect.origin.y + arrowHeight
+
 
         context.setFillColor((color?.cgColor)!)
         context.beginPath()
-        context.move(to: CGPoint(x: rect.origin.x + rect.size.width / 2.0, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + (rect.size.width + arrowSize.width) / 2.0, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + (rect.size.width - arrowSize.width) / 2.0, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width / 2.0, y: rect.origin.y))
+        context.move(to: CGPoint(x: xO, y: yO - arrowHeight))
+        context.addLine(to: CGPoint(x: xO + arrowSize.width / 2.0, y: yO))
+        context.addLine(to: CGPoint(x: xO + width - radius, y: yO))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO), tangent2End:  CGPoint(x: xO + width, y: yO + radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height - radius))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO + height), tangent2End:  CGPoint(x: xO + width - radius, y: yO + height), radius: radius)
+        context.addLine(to: CGPoint(x: xO + radius, y: yO + height))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO + height), tangent2End:  CGPoint(x: xO, y: yO + height - radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO, y: yO - arrowHeight))
         context.fillPath()
-
     }
 
-    func drawTopLeftRect(context: CGContext, rect: CGRect) {
+    func drawTopRightRect(context: CGContext, rect: CGRect, radius: CGFloat) {
+        let arrowWidth = arrowSize.width
+        let arrowHeight = arrowSize.height
+        let width = rect.size.width
+        let height = rect.size.height - arrowHeight
+
+        let xO = rect.origin.x
+        let yO = rect.origin.y + arrowHeight
+
+
         context.setFillColor((color?.cgColor)!)
         context.beginPath()
-        context.move(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + arrowSize.width / 2.0, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y))
-        context.fillPath()
-
-    }
-
-    func drawTopRightRect(context: CGContext, rect: CGRect) {
-        context.setFillColor((color?.cgColor)!)
-        context.beginPath()
-        context.move(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + rect.size.height))
-        context.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width - arrowSize.height / 2.0, y: rect.origin.y + arrowSize.height))
-        context.addLine(to: CGPoint(x: rect.origin.x + rect.size.width, y: rect.origin.y))
+        context.move(to: CGPoint(x: xO + radius, y: yO))
+        context.addLine(to: CGPoint(x: xO + width - arrowWidth, y: yO))
+        context.addLine(to: CGPoint(x: xO + width, y: yO - arrowHeight))
+        context.addLine(to: CGPoint(x: xO + width, y: yO + height - radius))
+        context.addArc(tangent1End: CGPoint(x: xO + width, y: yO + height), tangent2End:  CGPoint(x: xO + width - radius, y: yO + height), radius: radius)
+        context.addLine(to: CGPoint(x: xO + radius, y: yO + height))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO + height), tangent2End:  CGPoint(x: xO, y: yO + height - radius), radius: radius)
+        context.addLine(to: CGPoint(x: xO, y: yO + radius))
+        context.addArc(tangent1End: CGPoint(x: xO, y: yO), tangent2End:  CGPoint(x: xO + radius, y: yO), radius: radius)
         context.fillPath()
 
     }

@@ -433,7 +433,9 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
             color: RCTConvert.uiColor(json["markerColor"].intValue),
             font: markerFont,
             textColor: RCTConvert.uiColor(json["textColor"].intValue),
-            markerVerticalOffset: RCTConvert.cgFloat(json["markerVerticalOffset"].floatValue))
+            markerVerticalOffset: RCTConvert.cgFloat(json["markerVerticalOffset"].floatValue),
+            markerBorderRadius: RCTConvert.cgFloat(json["markerBorderRadius"].floatValue)
+        )
         chart.marker = balloonMarker
 
         balloonMarker.chartView = chart

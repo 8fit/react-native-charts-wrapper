@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.Chart;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class RNRectangleMarkerView extends MarkerView {
 
     private TextView tvContent;
+    private View shadowContent;
 
     private Drawable backgroundLeft = ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_left, null);
     private Drawable background = ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker, null);
@@ -30,6 +33,14 @@ public class RNRectangleMarkerView extends MarkerView {
     private Drawable backgroundTop = ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_top, null);
     private Drawable backgroundTopRight = ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_top_right, null);
 
+
+    private Drawable shadow =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_shadow, null);
+    private Drawable shadowTop =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_top_shadow, null);
+    private Drawable shadowTopLeft =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_top_left_shadow, null);
+    private Drawable shadowLeft =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_left_shadow, null);
+    private Drawable shadowRight =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_right_shadow, null);
+    private Drawable shadowTopRight =  ResourcesCompat.getDrawable(getResources(), R.drawable.rectangle_marker_top_right_shadow, null);
+
     private int digits = 0;
 
     private float mVerticalOffset = 0;
@@ -38,6 +49,7 @@ public class RNRectangleMarkerView extends MarkerView {
         super(context, R.layout.rectangle_marker);
 
         tvContent = (TextView) findViewById(R.id.rectangle_tvContent);
+        shadowContent = (View) findViewById(R.id.rectangle_tvContent_shadow);
     }
 
     public void setDigits(int digits) {
@@ -107,30 +119,37 @@ public class RNRectangleMarkerView extends MarkerView {
         float width = getWidth();
 
         if (posX + offset2.x < 0) {
-            offset2.x = 0;
+            offset2.x = -20;
 
             if (posY + offset2.y < 0) {
                 offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTopLeft);
+                shadowContent.setBackground(shadowTopLeft);
+
             } else {
                 tvContent.setBackground(backgroundLeft);
+                shadowContent.setBackground(shadowLeft);
             }
 
         } else if (chart != null && posX + width + offset2.x > chart.getWidth()) {
-            offset2.x = -width;
+            offset2.x = -width + 20;
 
             if (posY + offset2.y < 0) {
                 offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTopRight);
+                shadowContent.setBackground(shadowTopRight);
             } else {
                 tvContent.setBackground(backgroundRight);
+                shadowContent.setBackground(shadowRight);
             }
         } else {
             if (posY + offset2.y < 0) {
                 offset2.y = mVerticalOffset;
                 tvContent.setBackground(backgroundTop);
+                shadowContent.setBackground(shadowTop);
             } else {
                 tvContent.setBackground(background);
+                shadowContent.setBackground(shadow);
             }
         }
 

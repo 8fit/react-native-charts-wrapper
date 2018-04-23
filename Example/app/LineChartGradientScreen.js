@@ -52,7 +52,7 @@ class LineChartScreen extends React.Component {
                 values: [
                   {
                     x: new Date('2018-01-01').getTime() / 1000,
-                    y: 65, marker: '65 kg',
+                    y: 90, marker: '65 kg',
                   },
                   {
                     x: new Date('2018-02-01').getTime() / 1000,
@@ -72,7 +72,7 @@ class LineChartScreen extends React.Component {
                   },
                   {
                     x: new Date('2018-06-01').getTime() / 1000,
-                    y: 65, marker: 'Today: 65 kg',
+                    y: 90, marker: 'Today: 65 kg',
                   }],
                 label: 'Company X',
 
@@ -106,6 +106,7 @@ class LineChartScreen extends React.Component {
               markerColor: processColor('white'),
               textColor: processColor('black'),
               markerVerticalOffset: 10,
+              markerBorderRadius: 10,
             }}
             xAxis={{
               enabled: true,

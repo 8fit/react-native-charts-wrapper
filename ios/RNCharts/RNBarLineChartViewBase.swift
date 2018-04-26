@@ -46,7 +46,7 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
     }
 
     func setBorderColor(_ color: Int) {
-        
+
         barLineChart.borderColor = RCTConvert.uiColor(color);
     }
 
@@ -58,10 +58,10 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
     func setMaxVisibleValueCount(_ count: NSInteger) {
         barLineChart.maxVisibleCount = count;
     }
-    
+
     func setVisibleRange(_ config: NSDictionary) {
         let json = BridgeUtils.toJson(config)
-        
+
         let x = json["x"]
         if x["min"].double != nil {
             barLineChart.xAxis.axisMinimum = x["min"].doubleValue
@@ -69,7 +69,7 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
         if x["max"].double != nil {
             barLineChart.xAxis.axisMaximum = x["max"].doubleValue
         }
-        
+
         let y = json["y"]
         if y["left"]["min"].double != nil {
             barLineChart.leftAxis.axisMinimum = y["left"]["min"].doubleValue
@@ -77,7 +77,7 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
         if y["left"]["max"].double != nil {
             barLineChart.leftAxis.axisMaximum = y["left"]["max"].doubleValue
         }
-        
+
         if y["right"]["min"].double != nil {
             barLineChart.rightAxis.axisMinimum = y["right"]["min"].doubleValue
         }
@@ -85,7 +85,7 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
             barLineChart.rightAxis.axisMaximum = y["right"]["max"].doubleValue
         }
     }
-    
+
     func setAutoScaleMinMaxEnabled(_  enabled: Bool) {
         barLineChart.autoScaleMinMaxEnabled = enabled
     }
@@ -129,7 +129,7 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
             if json["axisDependency"].string != nil && json["axisDependency"].stringValue == "RIGHT" {
                 axisDependency = YAxis.AxisDependency.right
             }
-            
+
             barLineChart.zoom(scaleX: CGFloat(json["scaleX"].floatValue),
                     scaleY: CGFloat(json["scaleY"].floatValue),
                     xValue: json["xValue"].doubleValue,
@@ -142,11 +142,22 @@ class RNBarLineChartViewBase: RNYAxisChartViewBase {
         let json = BridgeUtils.toJson(config)
 
         let left = json["left"].double != nil ? CGFloat(json["left"].doubleValue) : 0
-        let top = json["top"].double != nil ? CGFloat(json["left"].doubleValue) : 0
+        let top = json["top"].double != nil ? CGFloat(json["top"].doubleValue) : 0
         let right = json["right"].double != nil ? CGFloat(json["right"].doubleValue) : 0
         let bottom = json["bottom"].double != nil ? CGFloat(json["bottom"].doubleValue) : 0
 
         barLineChart.setViewPortOffsets(left: left, top: top, right: right, bottom: bottom)
     }
 
+
+    func setExtraOffsets(_ config: NSDictionary) {
+        let json = BridgeUtils.toJson(config)
+
+        let left = json["left"].double != nil ? CGFloat(json["left"].doubleValue) : 0
+        let top = json["top"].double != nil ? CGFloat(json["top"].doubleValue) : 0
+        let right = json["right"].double != nil ? CGFloat(json["right"].doubleValue) : 0
+        let bottom = json["bottom"].double != nil ? CGFloat(json["bottom"].doubleValue) : 0
+
+        barLineChart.setExtraOffsets(left: left, top: top, right: right, bottom: bottom)
+    }
 }

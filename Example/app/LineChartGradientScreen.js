@@ -136,6 +136,7 @@ class LineChartScreen extends React.Component {
               durationY: 1500,
               easingY: 'EaseInOutQuart'
             }}
+            extraOffsets={{bottom: 30}}
             drawGridBackground={false}
             drawBorders={false}
             touchEnabled={true}

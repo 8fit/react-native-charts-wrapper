@@ -10,3 +10,6 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 #import <React/RCTFont.h>
+
+@import Charts;
+@import SwiftyJSON;

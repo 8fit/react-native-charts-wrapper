@@ -12,4 +12,3 @@
 #import <React/RCTFont.h>
 
 @import Charts;
-@import SwiftyJSON;

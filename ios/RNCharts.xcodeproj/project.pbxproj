@@ -60,23 +60,6 @@
 		F76268B421AC5B9800795C5F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76268B321AC5B9800795C5F /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F76268E621AE7EAC00795C5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F76268E121AE7EAC00795C5F /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
-			remoteInfo = Charts;
-		};
-		F76268E821AE7EAC00795C5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F76268E121AE7EAC00795C5F /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
-			remoteInfo = ChartsTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		9BFA5370207E134A004D83EC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -146,7 +129,6 @@
 		9B14B7362080DFBA00465AC4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		9BFA5372207E134A004D83EC /* libRNCharts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNCharts.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F76268B321AC5B9800795C5F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
-		F76268E121AE7EAC00795C5F /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +148,6 @@
 		9B14B5A42080DBFE00465AC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F76268E121AE7EAC00795C5F /* Charts.xcodeproj */,
 				9B14B5A92080DCAE00465AC4 /* UIKit.framework */,
 				9B14B5A72080DCAA00465AC4 /* Foundation.framework */,
 				9B14B5A52080DBFF00465AC4 /* CoreGraphics.framework */,
@@ -330,15 +311,6 @@
 			path = RNCharts;
 			sourceTree = "<group>";
 		};
-		F76268E221AE7EAC00795C5F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F76268E721AE7EAC00795C5F /* Charts.framework */,
-				F76268E921AE7EAC00795C5F /* ChartsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -384,35 +356,12 @@
 			mainGroup = 9BFA5369207E134A004D83EC;
 			productRefGroup = 9BFA5373207E134A004D83EC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F76268E221AE7EAC00795C5F /* Products */;
-					ProjectRef = F76268E121AE7EAC00795C5F /* Charts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				9BFA5371207E134A004D83EC /* RNCharts */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F76268E721AE7EAC00795C5F /* Charts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Charts.framework;
-			remoteRef = F76268E621AE7EAC00795C5F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F76268E921AE7EAC00795C5F /* ChartsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChartsTests.xctest;
-			remoteRef = F76268E821AE7EAC00795C5F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9BFA536E207E134A004D83EC /* Sources */ = {

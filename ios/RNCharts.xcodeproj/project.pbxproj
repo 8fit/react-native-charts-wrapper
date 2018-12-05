@@ -57,6 +57,7 @@
 		9B14B72F2080DDEC00465AC4 /* RNLineChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14B7002080DDEC00465AC4 /* RNLineChartManager.swift */; };
 		9B14B7302080DDEC00465AC4 /* RNLineChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B14B7012080DDEC00465AC4 /* RNLineChartManagerBridge.m */; };
 		9B14B7312080DDEC00465AC4 /* LineDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14B7022080DDEC00465AC4 /* LineDataExtract.swift */; };
+		F76268B421AC5B9800795C5F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76268B321AC5B9800795C5F /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -127,6 +128,7 @@
 		9B14B7022080DDEC00465AC4 /* LineDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDataExtract.swift; sourceTree = "<group>"; };
 		9B14B7362080DFBA00465AC4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		9BFA5372207E134A004D83EC /* libRNCharts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNCharts.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F76268B321AC5B9800795C5F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 		9BFA5374207E134A004D83EC /* RNCharts */ = {
 			isa = PBXGroup;
 			children = (
+				F76268B321AC5B9800795C5F /* SwiftyJSON.swift */,
 				9B14B6CE2080DDEA00465AC4 /* BalloonMarker.swift */,
 				9B14B6D32080DDEA00465AC4 /* bar */,
 				9B14B6DD2080DDEA00465AC4 /* bubble */,
@@ -392,6 +395,7 @@
 				9B14B7212080DDEC00465AC4 /* RNCandleStickChartManager.swift in Sources */,
 				9B14B7182080DDEC00465AC4 /* RNBubbleChartManagerBridge.m in Sources */,
 				9B14B7052080DDEC00465AC4 /* RNCombinedChartView.swift in Sources */,
+				F76268B421AC5B9800795C5F /* SwiftyJSON.swift in Sources */,
 				9B14B7172080DDEC00465AC4 /* BubbleDataExtract.swift in Sources */,
 				9B14B7152080DDEC00465AC4 /* RNBubbleChartManager.swift in Sources */,
 				9B14B71C2080DDEC00465AC4 /* RNPieChartManager.swift in Sources */,
@@ -536,6 +540,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../react-native/React/**",
@@ -554,6 +562,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../react-native/React/**",

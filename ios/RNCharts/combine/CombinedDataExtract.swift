@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class CombinedDataExtract : DataExtract {
     let lineDataExtract = LineDataExtract()

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import SwiftyJSON
 
 class ScatterDataExtract : DataExtract {
     override func createData() -> ChartData {

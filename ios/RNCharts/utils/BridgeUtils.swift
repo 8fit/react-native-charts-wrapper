@@ -5,6 +5,7 @@
 
 import Foundation
 import CoreGraphics
+import SwiftyJSON
 
 class BridgeUtils {
     static func toIOSAlpha(_ alpha: NSNumber) -> CGFloat {

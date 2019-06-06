@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ChartDataSetConfigUtils: NSObject {
     static func commonConfig(_ dataSet: ChartDataSet, config: JSON) {

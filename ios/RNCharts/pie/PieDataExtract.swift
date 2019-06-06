@@ -4,6 +4,7 @@
 
 import Foundation
 import CoreGraphics
+import SwiftyJSON
 
 class PieDataExtract : DataExtract {
     override func createData() -> ChartData {

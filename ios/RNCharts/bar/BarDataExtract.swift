@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class BarDataExtract : DataExtract {
     override open func createData() -> ChartData {

@@ -15,6 +15,7 @@
 import UIKit
 import Foundation
 import CoreGraphics
+import SwiftyJSON
 
 open class BalloonMarker: MarkerView {
     open var color: UIColor?
